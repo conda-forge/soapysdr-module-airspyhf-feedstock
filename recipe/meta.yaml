@@ -1,5 +1,5 @@
 {% set name = "soapysdr-module-airspyhf" %}
-{% set version = "0.2.0" %}
+{% set version = "0.2.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/pothosware/SoapyAirspyHF/archive/soapy-airspyhf-{{ version }}.tar.gz
-  sha256: f134ddc491151dfeb1ed9ca5a614d207d493b89fef173b325ce9e6f4e07884b3
+  sha256: 17f73322f46bd6172a82208a1df6992755c4028098b8aa47d2d6f4d0ab449065
 
 build:
   number: 0
@@ -17,6 +17,7 @@ build:
 requirements:
   build:
     - {{ compiler('cxx') }}
+    - {{ stdlib("c") }}
     - cmake
     - make  # [not win]
     - ninja  # [win]
