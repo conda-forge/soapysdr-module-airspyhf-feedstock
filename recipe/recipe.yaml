@@ -1,0 +1,56 @@
+schema_version: 1
+
+context:
+  name: soapysdr-module-airspyhf
+  version: "0.2.1"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/pothosware/SoapyAirspyHF/archive/soapy-airspyhf-${{ version }}.tar.gz
+  sha256: 17f73322f46bd6172a82208a1df6992755c4028098b8aa47d2d6f4d0ab449065
+
+build:
+  number: 1
+
+requirements:
+  build:
+    - ${{ compiler("cxx") }}
+    - ${{ stdlib("c") }}
+    - cmake
+    - ninja
+  host:
+    - libairspyhf
+    - soapysdr
+  run_exports:
+    - ${{ pin_subpackage("soapysdr-module-airspyhf", upper_bound="x.x") }}
+
+tests:
+  - package_contents:
+      strict: true
+      files:
+        - if: not win
+          then: lib/SoapySDR/modules${{ soapysdr }}/libairspyhfSupport.so
+          else: Library/lib/SoapySDR/modules${{ soapysdr }}/airspyhfSupport.dll
+  - script:
+      - SoapySDRUtil --info
+      - if: not win
+        then: SoapySDRUtil --info | grep airspyhfSupport
+        else: SoapySDRUtil --info | findstr /l airspyhfSupport
+
+about:
+  license: MIT
+  license_file: LICENSE.txt
+  summary: SoapySDR Airspy HF+ Support Module
+  description: |
+    The Soapy AirspyHF project provides a plugin module to use Airspy HF+ radio
+    devices within the SoapySDR API and software that supports SoapySDR.
+  homepage: https://github.com/pothosware/SoapyAirspyHF/wiki
+  repository: https://github.com/pothosware/SoapyAirspyHF
+  documentation: https://github.com/pothosware/SoapyAirspyHF/wiki
+
+extra:
+  recipe-maintainers:
+    - ryanvolz
