@@ -32,7 +32,7 @@ tests:
       strict: true
       files:
         - if: not win
-          then: lib/SoapySDR/modules${{ soapysdr }}/airspyhfSupport.so
+          then: lib/SoapySDR/modules${{ soapysdr }}/libairspyhfSupport.so
           else: Library/lib/SoapySDR/modules${{ soapysdr }}/airspyhfSupport.dll
   - script:
       - SoapySDRUtil --info
